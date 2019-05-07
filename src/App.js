@@ -32,7 +32,12 @@ class App extends React.Component {
         <Header title="Github Fetch" subtitle={subtitle}/>
         <input  onChange={this.onChange} value={username} className="search-bar" type="text"/>
         <button onClick={this.procuraGitHub}>Procurar</button>
-        <Info login={login} html_url={html_url} name={name} public_repos={public_repos} />
+        {
+          login && (
+            <Info login={login} html_url={html_url} name={name} public_repos={public_repos} />
+          )
+        }
+       
       </div>
     );
   }
