@@ -20,7 +20,7 @@ class App extends React.Component {
   }
 
   onChange = (evento) => {
-    this.setState({usuername: evento.target.value})
+    this.setState({username: evento.target.value})
   }
 
   render(){
