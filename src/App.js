@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from './components/Header'
+import Info from './components/Info'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends React.Component {
+
+  state = {
+    username:"franciscojsc"
+  }
+
+  procuraGitHub = async () => {
+    const {username } = this.state;
+    const ghUrl = `https://api.github.com/users/${username}`;
+    const response = await fetch(ghUrl);
+    const {login, html_url, name, public_repos } = await response.json();
+
+   this.setState({login, html_url, name, public_repos})
+  }
+
+  onChange = (evento) => {
+    this.setState({usuername: evento.target.value})
+  }
+
+  render(){
+    const { username, login, html_url, name, public_repos } = this.state;
+    const subtitle = "Encontre repositório, seguidores e mais apenas pelo nome de usuário";
+
+    return (
+      <div className="container">
+        <Header title="Github Fetch" subtitle={subtitle}/>
+        <input  onChange={this.onChange} value={username} className="search-bar" type="text"/>
+        <button onClick={this.procuraGitHub}>Procurar</button>
+        <Info login={login} html_url={html_url} name={name} public_repos={public_repos} />
+      </div>
+    );
+  }
 }
 
 export default App;
